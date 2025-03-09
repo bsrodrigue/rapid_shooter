@@ -23,10 +23,12 @@
 // #include "shaders.h"
 #include "wall.h"
 #include "warpzone.h"
+#include <array>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include <string.h>
@@ -58,7 +60,7 @@ static std::vector<Gate> gates;
 static std::vector<Vector2> gate_positions;
 
 static int enemy_count = 0;
-Enemy enemies[MAX_ENEMIES];
+std::array<Enemy, MAX_ENEMIES> enemies;
 
 static int item_count = 0;
 BaseItem items[MAX_ITEMS];
@@ -739,9 +741,9 @@ bool show_message = false;
 int main(int argc, char *argv[]) {
 
   if (argc != 3) {
-    printf("usage: autohacka [mode] [level_file]\n");
-    printf("possible modes: game, editor\n");
-    return 1;
+    std::cout << "usage: autohacka [mode] [level_file]" << std::endl;
+    std::cout << "possible modes: game, editor" << std::endl;
+    return EXIT_FAILURE;
   }
 
   unsigned int seed = time(0);
