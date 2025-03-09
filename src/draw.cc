@@ -129,7 +129,7 @@ void draw_editor_entity(EditorGridCell cell, Vector2 position) {
 }
 
 void render_mouse_hover_grid(EntityType type, Vector2 mouse) {
-  Vector2 position = get_absolute_position_from_grid_position(
+  Vector2 position = GRID2SCREEN(
       MOUSE_TO_GRID(mouse.x), MOUSE_TO_GRID(mouse.y));
 
   switch (type) {

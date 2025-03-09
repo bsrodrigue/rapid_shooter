@@ -3369,7 +3369,7 @@
 		}, {
 			"type":	0,
 			"enemy_health":	5,
-			"shooting_interval":	0.00999999977648258,
+			"shooting_interval":	0.5,
 			"shooting_duration":	1,
 			"shooting_cooldown":	1,
 			"tracks_player":	true,

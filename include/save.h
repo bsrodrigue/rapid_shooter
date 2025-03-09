@@ -36,11 +36,11 @@
   ((HEADER_SIZE) + (CELL_COUNT * CELL_COUNT) * sizeof(EditorGridCell))
 
 //------------------------ Level Files
-void load_level_file(const char *filename,
-                     EditorGridCell grid[CELL_COUNT][CELL_COUNT]);
+void load_grid_data_from_level_file(
+    const char *filename, EditorGridCell grid[CELL_COUNT][CELL_COUNT]);
 
-void save_level_file(const char *filename,
-                     EditorGridCell grid[CELL_COUNT][CELL_COUNT]);
+void save_level_file_from_grid_data(
+    const char *filename, EditorGridCell grid[CELL_COUNT][CELL_COUNT]);
 
 // New
 void create_level_file(const char *filename, const char *level_name,

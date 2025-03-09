@@ -122,7 +122,6 @@ CMakeFiles/autohacka.dir/src/draw.cc.o: \
  /usr/include/c++/14.2.1/ext/aligned_buffer.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/entities.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/textures.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/wall.h \

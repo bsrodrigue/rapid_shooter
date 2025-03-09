@@ -1,9 +1,16 @@
 #include "common.h"
+#include "config.h"
 #include <cmath>
+#include <cstdio>
 #include <raylib.h>
 
+void die(const char *message) {
+  perror(message);
+  exit(1);
+}
+
 // Convert grid position to absolute position
-Vector2 get_absolute_position_from_grid_position(float x, float y) {
+Vector2 GRID2SCREEN(float x, float y) {
   return {(float)CELL_OFFSET(x), (float)CELL_OFFSET(y)};
 }
 

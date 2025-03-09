@@ -2,9 +2,9 @@ CMakeFiles/autohacka.dir/src/common.cc.o: \
  /home/dnlbs/workspace/personal/mier_autohacr/src/common.cc \
  /usr/include/stdc-predef.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
  /usr/include/raylib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
  /usr/include/c++/14.2.1/cmath \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -73,4 +73,10 @@ CMakeFiles/autohacka.dir/src/common.cc.o: \
  /usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc \
  /usr/include/c++/14.2.1/tr1/poly_hermite.tcc \
  /usr/include/c++/14.2.1/tr1/poly_laguerre.tcc \
- /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc
+ /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc \
+ /usr/include/c++/14.2.1/cstdio /usr/include/stdio.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
+ /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
+ /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+ /usr/include/bits/types/cookie_io_functions_t.h \
+ /usr/include/bits/stdio_lim.h

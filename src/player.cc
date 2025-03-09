@@ -2,8 +2,11 @@
 #include "collision.h"
 #include "draw.h"
 #include "entities.h"
+#include "input_manager.h"
 #include <raylib.h>
 #include <raymath.h>
+
+InputManager player_input_manager;
 
 Player::Player(Vector2 position) {
   this->position = position;
@@ -12,9 +15,9 @@ Player::Player(Vector2 position) {
   this->speed = 200.0f;        // Max speed (units per second)
   this->acceleration = 800.0f; // Acceleration (units per second squared)
   this->deceleration =
-      400.0f; // Deceleration/friction (units per second squared)
-  this->health = 10000;
-  this->max_health = 10000;
+      500.0f; // Deceleration/friction (units per second squared)
+  this->health = 100;
+  this->max_health = 100;
 }
 
 void Player::load_texture(Texture2D texture) { this->texture = texture; }
@@ -22,13 +25,13 @@ void Player::load_texture(Texture2D texture) { this->texture = texture; }
 Vector2 Player::get_next_position() {
   // Get input direction
   Vector2 input_direction = {0, 0};
-  if (IsKeyDown(KEY_W))
+  if (player_input_manager.isActionDown(GameAction::MOVE_UP))
     input_direction.y -= 1.0f; // Up
-  if (IsKeyDown(KEY_S))
+  if (player_input_manager.isActionDown(GameAction::MOVE_DOWN))
     input_direction.y += 1.0f; // Down
-  if (IsKeyDown(KEY_A))
+  if (player_input_manager.isActionDown(GameAction::MOVE_LEFT))
     input_direction.x -= 1.0f; // Left
-  if (IsKeyDown(KEY_D))
+  if (player_input_manager.isActionDown(GameAction::MOVE_RIGHT))
     input_direction.x += 1.0f; // Right
 
   // Normalize direction to prevent faster diagonal movement

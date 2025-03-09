@@ -62,5 +62,5 @@ public:
 
 void render_level_editor(Camera2D *camera);
 void render_level_editor_ui(Camera2D *camera);
-void handle_editor_input(Camera2D *camera, int pressed_key);
+void handle_editor_input(Camera2D *camera);
 void load_level_editor(const char *filename);

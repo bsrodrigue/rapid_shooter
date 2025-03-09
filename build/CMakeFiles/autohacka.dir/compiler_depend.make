@@ -1534,6 +1534,7 @@ CMakeFiles/autohacka.dir/src/common.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/bits/pthreadtypes.h \
   /usr/include/bits/select.h \
   /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -1541,12 +1542,19 @@ CMakeFiles/autohacka.dir/src/common.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/locale_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/time_t.h \
@@ -1576,6 +1584,7 @@ CMakeFiles/autohacka.dir/src/common.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/c++/14.2.1/bits/version.h \
   /usr/include/c++/14.2.1/cmath \
   /usr/include/c++/14.2.1/concepts \
+  /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/ext/numeric_traits.h \
@@ -1606,6 +1615,7 @@ CMakeFiles/autohacka.dir/src/common.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/math.h \
   /usr/include/raylib.h \
   /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
@@ -2112,7 +2122,6 @@ CMakeFiles/autohacka.dir/src/entities.cc.o: /home/dnlbs/workspace/personal/mier_
 
 CMakeFiles/autohacka.dir/src/game.cc.o: /home/dnlbs/workspace/personal/mier_autohacr/src/game.cc \
   /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
-  /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/draw.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/editor_entities.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/enemy.h \
@@ -3225,6 +3234,7 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: /home/dnlbs/workspace/personal/m
   /home/dnlbs/workspace/personal/mier_autohacr/include/enemy.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/entities.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/imconfig.h \
+  /home/dnlbs/workspace/personal/mier_autohacr/include/input_manager.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item_drop.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/level.h \
@@ -3307,6 +3317,7 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: /home/dnlbs/workspace/personal/m
   /usr/include/c++/14.2.1/bits/cpp_type_traits.h \
   /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/14.2.1/bits/enable_special_members.h \
+  /usr/include/c++/14.2.1/bits/erase_if.h \
   /usr/include/c++/14.2.1/bits/exception.h \
   /usr/include/c++/14.2.1/bits/exception_defines.h \
   /usr/include/c++/14.2.1/bits/functexcept.h \
@@ -3318,6 +3329,7 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: /home/dnlbs/workspace/personal/m
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
+  /usr/include/c++/14.2.1/bits/node_handle.h \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/parse_numbers.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
@@ -3335,7 +3347,10 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: /home/dnlbs/workspace/personal/m
   /usr/include/c++/14.2.1/bits/stl_iterator.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/14.2.1/bits/stl_map.h \
+  /usr/include/c++/14.2.1/bits/stl_multimap.h \
   /usr/include/c++/14.2.1/bits/stl_pair.h \
+  /usr/include/c++/14.2.1/bits/stl_tree.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
   /usr/include/c++/14.2.1/bits/string_view.tcc \
@@ -3364,6 +3379,7 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: /home/dnlbs/workspace/personal/m
   /usr/include/c++/14.2.1/initializer_list \
   /usr/include/c++/14.2.1/iosfwd \
   /usr/include/c++/14.2.1/limits \
+  /usr/include/c++/14.2.1/map \
   /usr/include/c++/14.2.1/math.h \
   /usr/include/c++/14.2.1/new \
   /usr/include/c++/14.2.1/pstl/pstl_config.h \
@@ -3589,8 +3605,10 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /home/dnlbs/workspace/personal/mier_autohacr/include/entities.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/entity_loader.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/game.h \
+  /home/dnlbs/workspace/personal/mier_autohacr/include/game_state.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/gate.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/imconfig.h \
+  /home/dnlbs/workspace/personal/mier_autohacr/include/input_manager.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/inventory.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item_drop.h \
@@ -3686,8 +3704,10 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /usr/include/bits/wchar.h \
   /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
+  /usr/include/c++/14.2.1/algorithm \
   /usr/include/c++/14.2.1/backward/binders.h \
   /usr/include/c++/14.2.1/bit \
+  /usr/include/c++/14.2.1/bits/algorithmfwd.h \
   /usr/include/c++/14.2.1/bits/alloc_traits.h \
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/basic_ios.h \
@@ -3701,6 +3721,7 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/14.2.1/bits/cxxabi_init_exception.h \
   /usr/include/c++/14.2.1/bits/enable_special_members.h \
+  /usr/include/c++/14.2.1/bits/erase_if.h \
   /usr/include/c++/14.2.1/bits/exception.h \
   /usr/include/c++/14.2.1/bits/exception_defines.h \
   /usr/include/c++/14.2.1/bits/exception_ptr.h \
@@ -3720,6 +3741,7 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
+  /usr/include/c++/14.2.1/bits/node_handle.h \
   /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/parse_numbers.h \
@@ -3731,20 +3753,27 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /usr/include/c++/14.2.1/bits/requires_hosted.h \
   /usr/include/c++/14.2.1/bits/specfun.h \
   /usr/include/c++/14.2.1/bits/std_abs.h \
+  /usr/include/c++/14.2.1/bits/stl_algo.h \
   /usr/include/c++/14.2.1/bits/stl_algobase.h \
   /usr/include/c++/14.2.1/bits/stl_bvector.h \
   /usr/include/c++/14.2.1/bits/stl_construct.h \
   /usr/include/c++/14.2.1/bits/stl_function.h \
+  /usr/include/c++/14.2.1/bits/stl_heap.h \
   /usr/include/c++/14.2.1/bits/stl_iterator.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/14.2.1/bits/stl_map.h \
+  /usr/include/c++/14.2.1/bits/stl_multimap.h \
   /usr/include/c++/14.2.1/bits/stl_pair.h \
+  /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
+  /usr/include/c++/14.2.1/bits/stl_tree.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
   /usr/include/c++/14.2.1/bits/streambuf.tcc \
   /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/string_view.tcc \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
+  /usr/include/c++/14.2.1/bits/uniform_int_dist.h \
   /usr/include/c++/14.2.1/bits/uses_allocator.h \
   /usr/include/c++/14.2.1/bits/uses_allocator_args.h \
   /usr/include/c++/14.2.1/bits/utility.h \
@@ -3776,9 +3805,12 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
   /usr/include/c++/14.2.1/iostream \
   /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/limits \
+  /usr/include/c++/14.2.1/map \
   /usr/include/c++/14.2.1/math.h \
   /usr/include/c++/14.2.1/new \
   /usr/include/c++/14.2.1/ostream \
+  /usr/include/c++/14.2.1/pstl/execution_defs.h \
+  /usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/14.2.1/pstl/pstl_config.h \
   /usr/include/c++/14.2.1/stdexcept \
   /usr/include/c++/14.2.1/streambuf \
@@ -3849,12 +3881,14 @@ CMakeFiles/autohacka.dir/src/main.cc.o: /home/dnlbs/workspace/personal/mier_auto
 
 CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_autohacr/src/player.cc \
   /home/dnlbs/workspace/personal/mier_autohacr/include/collision.h \
+  /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/draw.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/editor_entities.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/enemy.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/entities.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/gate.h \
+  /home/dnlbs/workspace/personal/mier_autohacr/include/input_manager.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/item_drop.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/player.h \
@@ -3934,6 +3968,7 @@ CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/c++/14.2.1/bits/cpp_type_traits.h \
   /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/14.2.1/bits/enable_special_members.h \
+  /usr/include/c++/14.2.1/bits/erase_if.h \
   /usr/include/c++/14.2.1/bits/exception.h \
   /usr/include/c++/14.2.1/bits/exception_defines.h \
   /usr/include/c++/14.2.1/bits/functexcept.h \
@@ -3945,6 +3980,7 @@ CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
+  /usr/include/c++/14.2.1/bits/node_handle.h \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/parse_numbers.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
@@ -3962,7 +3998,10 @@ CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/c++/14.2.1/bits/stl_iterator.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/14.2.1/bits/stl_map.h \
+  /usr/include/c++/14.2.1/bits/stl_multimap.h \
   /usr/include/c++/14.2.1/bits/stl_pair.h \
+  /usr/include/c++/14.2.1/bits/stl_tree.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
   /usr/include/c++/14.2.1/bits/string_view.tcc \
@@ -3991,6 +4030,7 @@ CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_au
   /usr/include/c++/14.2.1/initializer_list \
   /usr/include/c++/14.2.1/iosfwd \
   /usr/include/c++/14.2.1/limits \
+  /usr/include/c++/14.2.1/map \
   /usr/include/c++/14.2.1/math.h \
   /usr/include/c++/14.2.1/new \
   /usr/include/c++/14.2.1/pstl/pstl_config.h \
@@ -4041,7 +4081,6 @@ CMakeFiles/autohacka.dir/src/player.cc.o: /home/dnlbs/workspace/personal/mier_au
 
 CMakeFiles/autohacka.dir/src/projectiles.cc.o: /home/dnlbs/workspace/personal/mier_autohacr/src/projectiles.cc \
   /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
-  /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/projectiles.h \
   /usr/include/alloca.h \
   /usr/include/bits/atomic_wide_counter.h \
@@ -4336,7 +4375,6 @@ CMakeFiles/autohacka.dir/src/screen.cc.o: /home/dnlbs/workspace/personal/mier_au
 
 CMakeFiles/autohacka.dir/src/shoot.cc.o: /home/dnlbs/workspace/personal/mier_autohacr/src/shoot.cc \
   /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
-  /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/projectiles.h \
   /home/dnlbs/workspace/personal/mier_autohacr/include/shoot.h \
   /usr/include/alloca.h \
@@ -4663,8 +4701,6 @@ bin/autohacka: /usr/lib/Scrt1.o \
   CMakeFiles/autohacka.dir/src/wall.cc.o
 
 
-CMakeFiles/autohacka.dir/src/main.cc.o:
-
 CMakeFiles/autohacka.dir/src/json_utils.cc.o:
 
 CMakeFiles/autohacka.dir/src/json.cc.o:
@@ -4741,6 +4777,12 @@ CMakeFiles/autohacka.dir/src/enemy.cc.o:
 
 /usr/include/c++/14.2.1/bits/streambuf_iterator.h:
 
+/usr/include/c++/14.2.1/bits/stl_tempbuf.h:
+
+CMakeFiles/autohacka.dir/src/main.cc.o:
+
+/usr/include/c++/14.2.1/bits/stl_algo.h:
+
 /usr/include/c++/14.2.1/bits/locale_facets.tcc:
 
 /usr/include/c++/14.2.1/bits/basic_ios.tcc:
@@ -4769,11 +4811,15 @@ CMakeFiles/autohacka.dir/external/imgui/imgui_tables.cpp.o:
 
 /home/dnlbs/workspace/personal/mier_autohacr/include/screen.h:
 
+/home/dnlbs/workspace/personal/mier_autohacr/include/game_state.h:
+
 /home/dnlbs/workspace/personal/mier_autohacr/include/entity_loader.h:
 
 /usr/include/linux/sched/types.h:
 
 /home/dnlbs/workspace/personal/mier_autohacr/include/raygui.h:
+
+/home/dnlbs/workspace/personal/mier_autohacr/include/input_manager.h:
 
 /home/dnlbs/workspace/personal/mier_autohacr/include/level_editor.h:
 
@@ -4831,6 +4877,8 @@ CMakeFiles/autohacka.dir/src/item_drop.cc.o:
 
 /usr/lib/libstdc++.so:
 
+/usr/include/c++/14.2.1/bits/uniform_int_dist.h:
+
 /usr/include/locale.h:
 
 /usr/include/linux/errno.h:
@@ -4856,6 +4904,8 @@ CMakeFiles/autohacka.dir/src/item_drop.cc.o:
 /usr/include/c++/14.2.1/bits/stl_vector.h:
 
 /usr/include/c++/14.2.1/bits/refwrap.h:
+
+/usr/include/c++/14.2.1/algorithm:
 
 /usr/include/c++/14.2.1/bits/postypes.h:
 
@@ -5125,6 +5175,8 @@ CMakeFiles/autohacka.dir/src/common.cc.o:
 
 /usr/include/bits/sigcontext.h:
 
+/usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h:
+
 /home/dnlbs/workspace/personal/mier_autohacr/include/textures.h:
 
 /usr/include/bits/types/__fpos64_t.h:
@@ -5138,6 +5190,8 @@ CMakeFiles/autohacka.dir/src/common.cc.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/popcntintrin.h:
 
 /usr/include/bits/types/timer_t.h:
+
+/usr/include/c++/14.2.1/pstl/execution_defs.h:
 
 /usr/include/c++/14.2.1/bits/locale_facets.h:
 
@@ -5262,6 +5316,8 @@ CMakeFiles/autohacka.dir/src/save.cc.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avx512bwintrin.h:
 
 /usr/include/bits/types/sigval_t.h:
+
+/usr/include/c++/14.2.1/bits/stl_heap.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/shaintrin.h:
 
@@ -5438,6 +5494,8 @@ CMakeFiles/autohacka.dir/external/imgui/imgui.cpp.o:
 /usr/include/sys/types.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/cetintrin.h:
+
+/usr/include/c++/14.2.1/bits/algorithmfwd.h:
 
 /usr/include/bits/select.h:
 

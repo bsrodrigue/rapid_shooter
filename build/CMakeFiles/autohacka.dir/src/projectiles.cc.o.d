@@ -5,7 +5,6 @@ CMakeFiles/autohacka.dir/src/projectiles.cc.o: \
  /usr/include/raylib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
  /usr/include/raymath.h /usr/include/c++/14.2.1/math.h \
  /usr/include/c++/14.2.1/cmath \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \

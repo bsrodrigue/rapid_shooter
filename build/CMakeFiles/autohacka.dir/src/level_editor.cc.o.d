@@ -130,14 +130,15 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: \
  /home/dnlbs/workspace/personal/mier_autohacr/include/imconfig.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/float.h \
  /usr/include/string.h /usr/include/strings.h /usr/include/assert.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/level.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/save.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/raygui.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/save.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/wall.h \
- /usr/include/raymath.h /usr/include/c++/14.2.1/math.h \
- /usr/include/c++/14.2.1/cmath /usr/include/math.h \
- /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/input_manager.h \
+ /usr/include/c++/14.2.1/map /usr/include/c++/14.2.1/bits/stl_tree.h \
+ /usr/include/c++/14.2.1/bits/node_handle.h \
+ /usr/include/c++/14.2.1/bits/stl_map.h \
+ /usr/include/c++/14.2.1/bits/stl_multimap.h \
+ /usr/include/c++/14.2.1/bits/erase_if.h /usr/include/raymath.h \
+ /usr/include/c++/14.2.1/math.h /usr/include/c++/14.2.1/cmath \
+ /usr/include/math.h /usr/include/bits/math-vector.h \
+ /usr/include/bits/libm-simd-decl-stubs.h \
  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
  /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
  /usr/include/bits/mathcalls-helper-functions.h \
@@ -154,4 +155,10 @@ CMakeFiles/autohacka.dir/src/level_editor.cc.o: \
  /usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc \
  /usr/include/c++/14.2.1/tr1/poly_hermite.tcc \
  /usr/include/c++/14.2.1/tr1/poly_laguerre.tcc \
- /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc
+ /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/level.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/save.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/raygui.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/save.h \
+ /home/dnlbs/workspace/personal/mier_autohacr/include/wall.h

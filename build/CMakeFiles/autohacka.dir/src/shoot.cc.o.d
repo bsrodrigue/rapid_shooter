@@ -3,7 +3,6 @@ CMakeFiles/autohacka.dir/src/shoot.cc.o: \
  /usr/include/stdc-predef.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/shoot.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/common.h \
- /home/dnlbs/workspace/personal/mier_autohacr/include/config.h \
  /usr/include/raylib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /home/dnlbs/workspace/personal/mier_autohacr/include/projectiles.h \

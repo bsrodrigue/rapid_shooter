@@ -5,6 +5,7 @@
 #include "draw.h"
 #include "entities.h"
 #include "imgui.h"
+#include "input_manager.h"
 #include "level.h"
 #include "raygui.h"
 #include "save.h"
@@ -16,6 +17,7 @@
 // TODO: Add undo action
 
 LevelEditor level_editor;
+InputManager editor_input_manager;
 
 void load_level_editor(const char *filename) {
   level_editor.filename = filename;
@@ -33,17 +35,17 @@ void render_entities() {
     for (int x = 0; x < CELL_COUNT; x++) {
 
       // Fill entire space with floor texture beforehand
-      draw_floor(get_absolute_position_from_grid_position(x, y));
+      draw_floor(GRID2SCREEN(x, y));
 
       EditorGridCell cell = level_editor.grid[y][x];
-      draw_editor_entity(cell, get_absolute_position_from_grid_position(x, y));
+      draw_editor_entity(cell, GRID2SCREEN(x, y));
     }
   }
 }
 
-void handle_editor_actions(Camera2D *camera, int pressed_key) {
+void handle_editor_actions(Camera2D *camera) {
   // Reset
-  if (pressed_key == KEY_ESCAPE) {
+  if (editor_input_manager.isActionPressed(GameAction::CANCEL)) {
     level_editor.placing_mode = false;
     level_editor.current_entity = EMPTY_ENTITY;
     level_editor.inspected_cell = nullptr;
@@ -57,9 +59,9 @@ void handle_editor_actions(Camera2D *camera, int pressed_key) {
     }
 
     // Save
-    if (pressed_key == KEY_S) {
-      level_editor.save_level();
-    }
+    // if (pressed_key == KEY_S) {
+    //   level_editor.save_level();
+    // }
   }
 
   if (level_editor.placing_mode) {
@@ -98,8 +100,8 @@ void handle_editor_actions(Camera2D *camera, int pressed_key) {
 }
 
 // TODO: Setup a generic Key Manipulation Handler
-void handle_editor_input(Camera2D *camera, int pressed_key) {
-  handle_editor_actions(camera, pressed_key);
+void handle_editor_input(Camera2D *camera) {
+  handle_editor_actions(camera);
   handle_camera_movement(camera);
 }
 

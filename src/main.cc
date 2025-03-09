@@ -6,6 +6,7 @@
 #include "entities.h"
 #include "entity_loader.h"
 #include "game.h"
+#include "game_state.h"
 #include "gate.h"
 #include "imgui.h"
 #include "inventory.h"
@@ -21,10 +22,11 @@
 #include "shoot.h"
 #include "textures.h"
 // #include "shaders.h"
+#include "input_manager.h"
 #include "wall.h"
-#include "warpzone.h"
-#include <array>
+#include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
@@ -35,60 +37,44 @@
 #include <variant>
 #include <vector>
 
+InputManager input_manager;
 ScreenManager screen_manager;
 
-Level level;
-
-char *level_file;
-char *game_mode;
+std::string level_file;
+std::string game_mode;
 
 // TODO: Maybe create a config file for player stats
 float player_bullet_damage = 0.1;
 float projectile_speed = 10;
 float last_shot = 0;
-float shooting_interval = 0.05;
+float shooting_interval = 0.1;
+
+const float DEFAULT_PROXIMITY_RADIUS = 20.0f;
+const float DEFAULT_ENTITY_RADIUS = 12.5f;
 
 // Experimentative Gameplay
 int kill_count = 0;
 
-static Camera2D camera;
-
-static std::vector<Wall> walls;
-static std::vector<Vector2> wall_positions;
-
-static std::vector<Gate> gates;
-static std::vector<Vector2> gate_positions;
-
-static int enemy_count = 0;
-std::array<Enemy, MAX_ENEMIES> enemies;
-
-static int item_count = 0;
-BaseItem items[MAX_ITEMS];
-
-static int warpzone_count = 0;
-Warpzone warpzones[10];
+static GameState game_state;
 
 ProjectilePool player_projectiles;
 ProjectilePool enemy_projectiles;
 
-Player player;
-
 Inventory inventory;
 
 void player_shoot() {
-  Vector2 mouse = get_world_mouse(camera);
-  shoot_target(player.position, mouse, player_projectiles);
+  Vector2 target = input_manager.getTargetPosition(game_state.camera,
+                                                   game_state.player.position);
+  shoot_target(game_state.player.position, target, player_projectiles);
 }
 
-void load_entities() {
-  EntityLoader loader({0, 0}, walls, wall_positions, gates, gate_positions,
-                      enemies, enemy_count, warpzones, warpzone_count, items,
-                      item_count);
+void load_entities(GameState &game_state) {
+  EntityLoader loader(game_state);
 
   for (int y = 0; y < CELL_COUNT; y++) {
     for (int x = 0; x < CELL_COUNT; x++) {
-      const EditorGridCell &cell = level.grid[y][x];
-      loader.position = get_absolute_position_from_grid_position(x, y);
+      const EditorGridCell &cell = game_state.current_level.grid[y][x];
+      loader.position = GRID2SCREEN(x, y);
 
       std::visit([&](const Entity &entity) { entity.accept(loader); },
                  cell.entity);
@@ -96,37 +82,15 @@ void load_entities() {
   }
 }
 
-void die(const char *message) {
-  perror(message);
-  exit(1);
-}
-
-void init_game_camera() {
-  camera.target = player.position;
-  camera.offset = {(float)WIN_WIDTH / 2, (float)WIN_HEIGHT / 2};
-  camera.rotation = 0;
-  camera.zoom = 3;
-}
-
-void init_window() {
-  InitWindow(WIN_WIDTH, WIN_HEIGHT, "Rapid Shooter");
-
-  if (!IsWindowReady())
-    die("Failed to initialize window\n");
-
-  SetTargetFPS(FPS);
-
-  // HideCursor();
-}
-
+// TODO: Move to another file
 template <typename T>
 int get_close_entity_index(const std::vector<T> &entities,
                            const Vector2 &position,
-                           float proximity_radius = 20.0f,
-                           float entity_radius = 12.5f) {
+                           float proximity_radius = DEFAULT_PROXIMITY_RADIUS,
+                           float entity_radius = DEFAULT_ENTITY_RADIUS) {
   int entity_index = -1;
 
-  for (int i = 0; i < entities.size(); i++) {
+  for (size_t i = 0; i < entities.size(); i++) {
     if (CheckCollisionPointCircle(
             position,
             {
@@ -143,12 +107,13 @@ int get_close_entity_index(const std::vector<T> &entities,
 }
 
 void handle_gate_opening() {
-  int gate_index = get_close_entity_index(gates, player.position);
+  int gate_index =
+      get_close_entity_index(game_state.gates, game_state.player.position);
 
   if (gate_index == -1)
     return;
 
-  if (IsKeyPressed(KEY_SPACE)) {
+  if (input_manager.isActionPressed(GameAction::INTERACT)) {
 
     int key_item_index = find_iventory_item_by_effect(inventory, KEY_EFFECT);
 
@@ -158,59 +123,69 @@ void handle_gate_opening() {
       return;
     }
 
-    gates[gate_index].opened = true;
+    // game_state.gates[gate_index].opened = true; // Is this really not needed?
 
-    gate_positions.erase(gate_positions.begin() + gate_index);
-    gates.erase(gates.begin() + gate_index);
+    game_state.gates.erase(game_state.gates.begin() + gate_index);
   }
 }
 
-void handle_game_input(int pressed_key) {
+void handle_game_input() {
   // Handle player shooting
   float now = GetTime();
-  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
-      (now - last_shot) > shooting_interval) {
+  if (input_manager.isActionDown(GameAction::SHOOT) &&
+      now - last_shot > shooting_interval) {
     player_shoot();
     last_shot = now;
   }
 
   // Dashing ?
-  if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-    // player.start_dash(get_world_mouse(camera));
+  if (input_manager.isActionDown(GameAction::DASH)) {
+    // Implement dash logic here
   }
 
-  std::vector<Vector2> colliders = wall_positions;
+  // Is this really optimal?
+  std::vector<Vector2> colliders;
+  std::vector<Wall> walls = game_state.walls;
+  std::transform(walls.begin(), walls.end(), std::back_inserter(colliders),
+                 [](const Wall &wall) { return wall.position; });
+
+  std::vector<Vector2> gate_positions;
+  std::transform(game_state.gates.begin(), game_state.gates.end(),
+                 std::back_inserter(gate_positions),
+                 [](const Gate &gate) { return gate.position; });
 
   colliders.insert(colliders.end(), gate_positions.begin(),
                    gate_positions.end());
 
-  player.handle_player_movement(colliders);
+  game_state.player.handle_player_movement(colliders);
 
   // Handle Gate opening logic
   handle_gate_opening();
 
   // Handle Warpzone logic
   int warpzone_index = -1;
-  for (int i = 0; i < warpzone_count; i++) {
-    if (CheckCollisionPointCircle(player.position,
-                                  {
-                                      .x = warpzones[i].position.x + 12.5f,
-                                      .y = warpzones[i].position.y + 12.5f,
-                                  },
-                                  12.5f)) {
+  for (size_t i = 0; i < game_state.warpzones.size(); i++) {
+    if (CheckCollisionPointCircle(
+            game_state.player.position,
+            {
+                .x = game_state.warpzones[i].position.x + DEFAULT_ENTITY_RADIUS,
+                .y = game_state.warpzones[i].position.y + DEFAULT_ENTITY_RADIUS,
+            },
+            DEFAULT_ENTITY_RADIUS)) {
       warpzone_index = i;
       break;
     }
   }
 
   if (warpzone_index != -1) {
-    const Vector2 destination = warpzones[warpzone_index].destination;
+    const Vector2 destination =
+        game_state.warpzones[warpzone_index].destination;
 
-    player.position = destination;
+    game_state.player.position = destination;
   }
 }
 
-void handle_input(int pressed_key) {
+void handle_input() {
   if (ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard) {
     return;
   }
@@ -221,10 +196,10 @@ void handle_input(int pressed_key) {
   case MENU:
     break;
   case GAME:
-    handle_game_input(pressed_key);
+    handle_game_input();
     break;
   case LEVEL_EDITOR:
-    handle_editor_input(&camera, pressed_key);
+    handle_editor_input(&game_state.camera);
     break;
   }
 }
@@ -253,7 +228,7 @@ void use_item(Player *player, ItemEffect effect) {
 }
 
 void pick_item(int index, Player *player) {
-  BaseItem item = items[index];
+  const BaseItem item = game_state.items[index];
 
   if (item.usage == INSTANT_USAGE)
     use_item(player, item.effect);
@@ -264,7 +239,7 @@ void pick_item(int index, Player *player) {
 
   TraceLog(LOG_INFO, "Picked item %d", index);
 
-  items[index].picked = true;
+  game_state.items[index].picked = true;
 }
 
 void handle_enemy_death(Enemy *enemy) {
@@ -283,50 +258,53 @@ void handle_enemy_death(Enemy *enemy) {
 
       BaseItem item = drop(enemy->item_drop, enemy->position);
       item.position = drop_position;
-      items[item_count++] = item;
+
+      game_state.items.push_back(item);
     }
   }
 }
 
 void damage_enemy(int index) {
-  if ((enemies[index].health - player_bullet_damage) <= 0) {
-    enemies[index].state = DEAD;
-    handle_enemy_death(&enemies[index]);
+  if ((game_state.enemies[index].health - player_bullet_damage) <= 0) {
+    game_state.enemies[index].state = DEAD;
+    handle_enemy_death(&game_state.enemies[index]);
 
     // Experimentative Gameplay
     kill_count++;
     player_bullet_damage += 0.01;
   }
 
-  enemies[index].health = enemies[index].health - player_bullet_damage;
+  game_state.enemies[index].health =
+      game_state.enemies[index].health - player_bullet_damage;
 }
 
 void damage_wall(int index) {
-  if ((walls[index].health - player_bullet_damage) <= 0) {
+  if ((game_state.walls[index].health - player_bullet_damage) <= 0) {
     // walls[index].state = DESTROYED;
-    walls.erase(walls.begin() + index);
-    wall_positions.erase(wall_positions.begin() + index);
+    game_state.walls.erase(game_state.walls.begin() + index);
   }
 
-  walls.at(index).health = walls.at(index).health - player_bullet_damage;
+  game_state.walls.at(index).health =
+      game_state.walls.at(index).health - player_bullet_damage;
 }
 
 void damage_player(float damage) {
-  if ((player.health - damage) <= 0) {
-    player.health = 0;
+  if ((game_state.player.health - damage) <= 0) {
+    game_state.player.health = 0;
     // TODO: Implement Game Over (restart game);
     CloseWindow();
   }
 
-  player.health -= damage;
+  game_state.player.health -= damage;
 }
 
 int check_enemy_collision(Vector2 position, float radius) {
-  for (int i = 0; i < enemy_count; i++) {
-    if (enemies[i].state == DEAD)
+  for (size_t i = 0; i < game_state.enemies.size(); i++) {
+    if (game_state.enemies[i].state == DEAD)
       continue;
 
-    if (CheckCollisionCircles(position, radius, enemies[i].position, 10))
+    if (CheckCollisionCircles(position, radius, game_state.enemies[i].position,
+                              10))
       return i;
   }
 
@@ -334,11 +312,12 @@ int check_enemy_collision(Vector2 position, float radius) {
 }
 
 int check_items_collision(Vector2 position, float radius) {
-  for (int i = 0; i < item_count; i++) {
-    if (items[i].picked)
+  for (int i = 0; i < game_state.items.size(); i++) {
+    if (game_state.items[i].picked)
       continue;
 
-    if (CheckCollisionCircles(position, radius, items[i].position, 10))
+    if (CheckCollisionCircles(position, radius, game_state.items[i].position,
+                              10))
       return i;
   }
 
@@ -351,18 +330,23 @@ void update_enemy_projectiles() {
       continue;
 
     if (CheckCollisionCircles(enemy_projectiles.pool[i].position, 5,
-                              player.position, 10)) {
+                              game_state.player.position, 10)) {
       damage_player(1);
       enemy_projectiles.deallocate_projectile(i);
       continue;
     }
+
+    std::vector<Vector2> wall_positions;
+    std::transform(game_state.walls.begin(), game_state.walls.end(),
+                   std::back_inserter(wall_positions),
+                   [](const Wall &wall) { return wall.position; });
 
     // Find better way to check many-to-many collisions
     int touched = check_wall_collision(wall_positions,
                                        enemy_projectiles.pool[i].position);
 
     if (touched != -1) {
-      switch (walls[touched].type) {
+      switch (game_state.walls[touched].type) {
       case BREAKABLE_WALL:
         // Should enemies be able to destroy walls?
         damage_wall(touched);
@@ -397,13 +381,18 @@ void update_player_projectiles() {
       continue;
     }
 
+    std::vector<Vector2> wall_positions;
+    std::transform(game_state.walls.begin(), game_state.walls.end(),
+                   std::back_inserter(wall_positions),
+                   [](const Wall &wall) { return wall.position; });
+
     // Recycle in object pool for optimal memory usage
     // Find better way to check many-to-many collisions
     int touched = check_wall_collision(wall_positions,
                                        player_projectiles.pool[i].position);
 
     if (touched != -1) {
-      switch (walls[touched].type) {
+      switch (game_state.walls[touched].type) {
       case BREAKABLE_WALL:
         damage_wall(touched);
         break;
@@ -450,7 +439,8 @@ void handle_enemy_shoot(Enemy *enemy) {
     switch (enemy->type) {
     case BASE_ENEMY:
       if (enemy->tracks_player) {
-        shoot_target(enemy->position, player.position, enemy_projectiles);
+        shoot_target(enemy->position, game_state.player.position,
+                     enemy_projectiles);
       }
 
       else {
@@ -476,52 +466,60 @@ void handle_enemy_shoot(Enemy *enemy) {
 }
 
 void handle_enemy_behaviour() {
-  for (int i = 0; i < enemy_count; i++) {
+  for (size_t i = 0; i < game_state.enemies.size(); i++) {
 
-    if (enemies[i].state == DEAD)
+    if (game_state.enemies[i].state == DEAD)
       continue;
 
     bool is_in_range = CheckCollisionPointCircle(
-        player.position, enemies[i].position, enemies[i].vision_radius);
+        game_state.player.position, game_state.enemies[i].position,
+        game_state.enemies[i].vision_radius);
 
     if (is_in_range) {
 
-      if (enemies[i].tracks_player) {
-        enemies[i].shooting_angle =
-            get_angle_relative_to(player.position, enemies[i].position);
+      if (game_state.enemies[i].tracks_player) {
+        game_state.enemies[i].shooting_angle = get_angle_relative_to(
+            game_state.player.position, game_state.enemies[i].position);
       }
 
-      handle_enemy_shoot(&enemies[i]);
+      handle_enemy_shoot(&game_state.enemies[i]);
     }
 
-    if (enemies[i].can_move) {
-      Vector2 next_position =
-          Vector2MoveTowards(enemies[i].position, player.position, 2);
+    if (game_state.enemies[i].can_move) {
+      Vector2 next_position = Vector2MoveTowards(game_state.enemies[i].position,
+                                                 game_state.player.position, 2);
+
+      std::vector<Vector2> wall_positions;
+      std::transform(game_state.walls.begin(), game_state.walls.end(),
+                     std::back_inserter(wall_positions),
+                     [](const Wall &wall) { return wall.position; });
 
       if (check_wall_collision(wall_positions, next_position) == -1) {
-        enemies[i].position = next_position;
+        game_state.enemies[i].position = next_position;
       }
     }
   }
 }
 
 void update_positions() {
-  camera.target = player.position;
+  game_state.camera.target = game_state.player.position;
   handle_enemy_behaviour();
   update_enemy_projectiles();
   update_player_projectiles();
 
   // Handle Item Picking
-  int item_index = check_items_collision(player.position, 10);
+  int item_index = check_items_collision(game_state.player.position, 10);
 
   if (item_index != -1) {
-    pick_item(item_index, &player);
+    pick_item(item_index, &game_state.player);
   }
 }
 
 void update_player_angle() {
-  Vector2 mouse = get_world_mouse(camera);
-  player.angle = get_angle_relative_to(mouse, player.position);
+  Vector2 target = input_manager.getTargetPosition(game_state.camera,
+                                                   game_state.player.position);
+  game_state.player.angle =
+      get_angle_relative_to(target, game_state.player.position);
 }
 
 void handle_updates() {
@@ -540,16 +538,16 @@ void handle_updates() {
 }
 
 void draw_items() {
-  for (int i = 0; i < MAX_ITEMS; i++) {
-    if (!items[i].picked) {
-      switch (items[i].texture) {
+  for (size_t i = 0; i < game_state.items.size(); i++) {
+    if (!game_state.items[i].picked) {
+      switch (game_state.items[i].texture) {
       case NO_TEXTURE:
         break;
       case HEALING_CHIP_TEXTURE:
-        draw_healing_chip(items[i].position, 0);
+        draw_healing_chip(game_state.items[i].position, 0);
         break;
       case KEY_TEXTURE:
-        draw_gate_key(items[i].position, 0);
+        draw_gate_key(game_state.items[i].position, 0);
         break;
       }
     }
@@ -557,9 +555,9 @@ void draw_items() {
 }
 
 void draw_gates() {
-  for (int i = 0; i < gates.size(); i++) {
-    if (!gates[i].opened) {
-      draw_warpzone(gates[i].position);
+  for (size_t i = 0; i < game_state.gates.size(); i++) {
+    if (!game_state.gates[i].opened) {
+      draw_warpzone(game_state.gates[i].position);
     }
   }
 }
@@ -598,17 +596,18 @@ void draw_healthbar(Vector2 position, float max_health, float health, int width,
 // TODO: Use this and think about creating maybe a universal utility for
 // drawing entities
 void draw_enemies() {
-  for (int i = 0; i < enemy_count; i++) {
-    if (enemies[i].state == DEAD)
+  for (size_t i = 0; i < game_state.enemies.size(); i++) {
+    if (game_state.enemies[i].state == DEAD)
       continue;
 
-    switch (enemies[i].type) {
+    switch (game_state.enemies[i].type) {
     case BASE_ENEMY: {
-      Vector2 position = enemies[i].position;
-      draw_healthbar(position, enemies[i].max_health, enemies[i].health, 32,
-                     32);
+      Vector2 position = game_state.enemies[i].position;
+      draw_healthbar(position, game_state.enemies[i].max_health,
+                     game_state.enemies[i].health, 32, 32);
 
-      draw_base_enemy(enemies[i].position, enemies[i].shooting_angle);
+      draw_base_enemy(game_state.enemies[i].position,
+                      game_state.enemies[i].shooting_angle);
     } break;
     }
   }
@@ -617,16 +616,17 @@ void draw_enemies() {
 void render_floor() {
   for (int y = 0; y < CELL_COUNT; y++) {
     for (int x = 0; x < CELL_COUNT; x++) {
-      draw_floor(get_absolute_position_from_grid_position(x, y));
+      draw_floor(GRID2SCREEN(x, y));
     }
   }
 }
 
 void draw_player_target() {
-  Vector2 mouse = get_world_mouse(camera);
+  Vector2 target = input_manager.getTargetPosition(game_state.camera,
+                                                   game_state.player.position);
 
   // TODO: Decide if player angle is needed.
-  draw_target_cursor(mouse, 0);
+  draw_target_cursor(target, 0);
 }
 
 void draw_player_healthbar(Player player) {
@@ -649,8 +649,8 @@ void draw_player_healthbar(Player player) {
 }
 
 void draw_warpzones() {
-  for (int i = 0; i < warpzone_count; i++) {
-    draw_warpzone(warpzones[i].position);
+  for (size_t i = 0; i < game_state.warpzones.size(); i++) {
+    draw_warpzone(game_state.warpzones[i].position);
   }
 }
 
@@ -659,7 +659,7 @@ void render_game() {
   render_floor();
 
   // Environment
-  draw_arena(walls);
+  draw_arena(game_state.walls);
 
   // Interactibles
   draw_gates();
@@ -672,35 +672,27 @@ void render_game() {
 
   // Actors
   draw_enemies();
-  player.draw();
+  game_state.player.draw();
 
   // HUD
   draw_player_target();
-  draw_player_healthbar(player);
-}
-
-// TODO: Optimize level loading
-void load_level() { load_entities(); }
-
-void init_player() {
-  player.position = get_player_position_for_game(level.grid);
+  draw_player_healthbar(game_state.player);
 }
 
 void ScreenManager::init_game_screen() {
-  level.filename = level_file;
-  level.load_level_data();
-  init_player();
+  game_state.current_level.load_level_data(level_file);
+  load_entities(game_state);
 
   init_inventory(&inventory);
-  load_level();
-  init_game_camera();
+
+  game_state.init_game_camera();
 }
 
 void ScreenManager::init_level_editor_screen(const char *filename) {
   ShowCursor();
-  camera.offset = {(float)WIN_WIDTH / 2, (float)WIN_HEIGHT / 2};
-  camera.rotation = 0;
-  camera.zoom = 1;
+  game_state.camera.offset = {(float)WIN_WIDTH / 2, (float)WIN_HEIGHT / 2};
+  game_state.camera.rotation = 0;
+  game_state.camera.zoom = 1;
   load_level_editor(filename);
 }
 
@@ -720,7 +712,7 @@ void ScreenManager::handle_screen_change() {
     SetExitKey(KEY_ESCAPE);
     break;
   case LEVEL_EDITOR:
-    this->init_level_editor_screen(level_file);
+    this->init_level_editor_screen(level_file.c_str());
     SetExitKey(0);
     break;
   }
@@ -737,6 +729,17 @@ void set_initial_screen(const char *game_mode) {
 }
 
 bool show_message = false;
+
+void init_window() {
+  InitWindow(WIN_WIDTH, WIN_HEIGHT, "Rapid Shooter");
+
+  if (!IsWindowReady())
+    die("Failed to initialize window\n");
+
+  SetTargetFPS(FPS);
+
+  // HideCursor();
+}
 
 int main(int argc, char *argv[]) {
 
@@ -760,7 +763,7 @@ int main(int argc, char *argv[]) {
   game_mode = argv[1];
   level_file = argv[2];
 
-  set_initial_screen(game_mode);
+  set_initial_screen(game_mode.c_str());
 
   while (!WindowShouldClose()) {
     screen_manager.handle_screen_change();
@@ -768,15 +771,13 @@ int main(int argc, char *argv[]) {
     BeginDrawing();
     ClearBackground(BLACK);
 
-    //================================================[Game
-    // Camera]====================================================//
+    //==========================================[Game
+    // Camera]==============================================//
 
-    BeginMode2D(camera);
-
-    int pressed_key = GetKeyPressed();
+    BeginMode2D(game_state.camera);
 
     // Input
-    handle_input(pressed_key);
+    handle_input();
 
     // State
     handle_updates();
@@ -787,7 +788,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (screen_manager.active_screen == LEVEL_EDITOR) {
-      render_level_editor(&camera);
+      render_level_editor(&game_state.camera);
     }
 
     EndMode2D();
@@ -799,7 +800,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (screen_manager.active_screen == LEVEL_EDITOR) {
-      render_level_editor_ui(&camera);
+      render_level_editor_ui(&game_state.camera);
     }
     rlImGuiEnd();
     EndDrawing();

@@ -10,8 +10,6 @@
 #include <string>
 #include <variant>
 
-// TODO: Design a better file format for level files
-
 void create_level_file(const char *filename, const char *level_name,
                        const char *author_name) {
 
@@ -71,7 +69,8 @@ void parse_entities(cJSON *json_array, EditorGridCell (*grid)[100],
   }
 }
 
-void load_level_file(const char *filename, EditorGridCell (*grid)[100]) {
+void load_grid_data_from_level_file(const char *filename,
+                                    EditorGridCell (*grid)[100]) {
   int data_size = get_file_size(filename);
 
   const char *loaded_data = (const char *)LoadFileData(filename, &data_size);
@@ -108,7 +107,8 @@ void load_level_file(const char *filename, EditorGridCell (*grid)[100]) {
   MemFree((void *)loaded_data); // Free the loaded data if needed
 }
 
-void save_level_file(const char *filename, EditorGridCell (*grid)[100]) {
+void save_level_file_from_grid_data(const char *filename,
+                                    EditorGridCell (*grid)[100]) {
   cJSON *root = cJSON_CreateObject();
 
   cJSON *walls = cJSON_CreateArray();
