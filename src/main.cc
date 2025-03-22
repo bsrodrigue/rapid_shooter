@@ -25,11 +25,14 @@
 #include "input_manager.h"
 #include "wall.h"
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
+#include <ios>
 #include <iostream>
 #include <raylib.h>
 #include <raymath.h>
@@ -45,7 +48,7 @@ std::string game_mode;
 
 // TODO: Maybe create a config file for player stats
 float player_bullet_damage = 0.1;
-float projectile_speed = 10;
+float projectile_speed = 5;
 float last_shot = 0;
 float shooting_interval = 0.1;
 
@@ -144,6 +147,7 @@ void handle_game_input() {
   }
 
   // Is this really optimal?
+  // TODO: Decouple input handling from collision checking
   std::vector<Vector2> colliders;
   std::vector<Wall> walls = game_state.walls;
   std::transform(walls.begin(), walls.end(), std::back_inserter(colliders),
@@ -368,6 +372,8 @@ void update_enemy_projectiles() {
 }
 
 void update_player_projectiles() {
+  const float delta = GetFrameTime();
+
   // TODO: Do you seriously want to loop over all the projectiles?
   for (int i = 0; i < MAX_PROJECTILES; i++) {
     if (!player_projectiles.pool[i].is_shooting)
@@ -407,6 +413,7 @@ void update_player_projectiles() {
         Vector2Add(player_projectiles.pool[i].position,
                    Vector2Multiply(player_projectiles.pool[i].direction,
                                    {projectile_speed, projectile_speed}));
+
     player_projectiles.pool[i].position = projectile_pos;
   }
 }
@@ -466,6 +473,8 @@ void handle_enemy_shoot(Enemy *enemy) {
 }
 
 void handle_enemy_behaviour() {
+  const float delta = GetFrameTime();
+
   for (size_t i = 0; i < game_state.enemies.size(); i++) {
 
     if (game_state.enemies[i].state == DEAD)
@@ -486,8 +495,13 @@ void handle_enemy_behaviour() {
     }
 
     if (game_state.enemies[i].can_move) {
-      Vector2 next_position = Vector2MoveTowards(game_state.enemies[i].position,
-                                                 game_state.player.position, 2);
+
+      Vector2 next_position =
+          Vector2Lerp(game_state.enemies[i].position,
+                      game_state.player.position, 0.7 * delta);
+
+      const float distance =
+          Vector2Distance(next_position, game_state.player.position);
 
       std::vector<Vector2> wall_positions;
       std::transform(game_state.walls.begin(), game_state.walls.end(),
@@ -495,6 +509,8 @@ void handle_enemy_behaviour() {
                      [](const Wall &wall) { return wall.position; });
 
       if (check_wall_collision(wall_positions, next_position) == -1) {
+        if (distance <= 70)
+          return;
         game_state.enemies[i].position = next_position;
       }
     }
@@ -502,8 +518,10 @@ void handle_enemy_behaviour() {
 }
 
 void update_positions() {
-  game_state.camera.target = game_state.player.position;
+  game_state.camera.target =
+      Vector2Lerp(game_state.camera.target, game_state.player.position, 0.05);
   handle_enemy_behaviour();
+
   update_enemy_projectiles();
   update_player_projectiles();
 
@@ -518,8 +536,9 @@ void update_positions() {
 void update_player_angle() {
   Vector2 target = input_manager.getTargetPosition(game_state.camera,
                                                    game_state.player.position);
-  game_state.player.angle =
-      get_angle_relative_to(target, game_state.player.position);
+  const float angle = get_angle_relative_to(target, game_state.player.position);
+
+  game_state.player.angle = Lerp(game_state.player.angle, angle, 0.1);
 }
 
 void handle_updates() {
@@ -768,20 +787,24 @@ int main(int argc, char *argv[]) {
   while (!WindowShouldClose()) {
     screen_manager.handle_screen_change();
 
-    BeginDrawing();
-    ClearBackground(BLACK);
-
-    //==========================================[Game
-    // Camera]==============================================//
-
-    BeginMode2D(game_state.camera);
-
     // Input
     handle_input();
 
     // State
+    const auto start = std::chrono::high_resolution_clock::now();
     handle_updates();
+    const auto end = std::chrono::high_resolution_clock::now();
 
+    auto duration =
+        std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+    double ms_time = duration.count() / 1000000.0;
+
+    std::cout << "[Game Logic]: " << ms_time << "ms" << std::endl;
+
+    BeginDrawing();
+    BeginMode2D(game_state.camera);
+    ClearBackground(BLACK);
     // UI
     if (screen_manager.active_screen == GAME) {
       render_game();

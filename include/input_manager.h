@@ -1,7 +1,7 @@
+#include "common.h"
 #include <map>
 #include <raylib.h>
 #include <raymath.h>
-#include "common.h"
 
 #pragma once
 
@@ -168,7 +168,10 @@ public:
             Vector2Scale(aimDir, 50.0f); // Adjust distance as needed
         return Vector2Add(player_position, offset);
       }
+
+      // TODO: Handle no aim direction
     }
+
     // Default to mouse if no gamepad input or no gamepad connected
     return get_world_mouse(camera);
   }

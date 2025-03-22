@@ -9,9 +9,9 @@
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeProjectFlavorService">
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
@@ -25,39 +25,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80b62c4f-51c8-4d26-b828-b16a594cdd4a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/tasks.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/compiler_depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/compiler_depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cJSON.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collision.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/draw.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enemy.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity_loader.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inventory.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/item.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/item_drop.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/json.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/player.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/projectiles.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raygui.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/save.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screen.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shoot.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/textures.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/wall.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/warpzone.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/common.cc.30D1D618E165AB97.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/common.cc.30D1D618E165AB97.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/common.h.65BFB34AAC1C645B.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/common.h.65BFB34AAC1C645B.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/config.h.01885884D4E69DDE.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/config.h.01885884D4E69DDE.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/draw.cc.6B49F60AC29A1AF3.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/draw.cc.6B49F60AC29A1AF3.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/entity_loader.h.4574115F8B27A347.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/entity_loader.h.4574115F8B27A347.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/game.cc.215FFBA01974D341.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/game.cc.215FFBA01974D341.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/game.h.4A4A2253F25499A9.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/game.h.4A4A2253F25499A9.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/level.cc.9281FB2430E12EFF.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/level.cc.9281FB2430E12EFF.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/level.h.079DB0475AFC8D37.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/level.h.079DB0475AFC8D37.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/level_editor.cc.7F58A94DAB4DF78C.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/level_editor.cc.7F58A94DAB4DF78C.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/level_editor.h.3C8EAE864C875382.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/level_editor.h.3C8EAE864C875382.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/level_editor_utils.cc.F38E06432EAE5AAA.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/level_editor_utils.cc.F38E06432EAE5AAA.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/main.cc.E74FC32E59C5D61C.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/main.cc.E74FC32E59C5D61C.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/player.cc.67561D8EC2FC1D40.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/player.cc.67561D8EC2FC1D40.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/save.cc.F1F56A203927C7EE.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/save.cc.F1F56A203927C7EE.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache/clangd/index/save.h.05F292709F7CD9B2.idx" beforeDir="false" afterPath="$PROJECT_DIR$/.cache/clangd/index/save.h.05F292709F7CD9B2.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/.cmake/api/v1/reply/index-2025-03-09T22-58-37-0409.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/level_editor.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/level_editor.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/level_editor.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/level_editor.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/main.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/main.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/player.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/player.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/player.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/autohacka.dir/src/player.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/autohacka" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/autohacka" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/impel_down.json" beforeDir="false" afterPath="$PROJECT_DIR$/impel_down.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/config.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/input_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/input_manager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,30 +70,30 @@
     <option name="minorVersion" value="3.1.1" />
     <option name="productBranch" value="Classic" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2tLu871NEyxUqXsYk1FRiegPRay" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "develop",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -109,6 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740143516169</updated>
       <workItem from="1740143518774" duration="40000" />
+      <workItem from="1742109484753" duration="31000" />
     </task>
     <servers />
   </component>

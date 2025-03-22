@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define FPS 60 // Better than Pokemon
+#define FPS 120 // Better than Pokemon
 
 // TODO: Handle heterogenous screen sizes
 #define LEVEL_WIDTH 2500
