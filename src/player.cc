@@ -12,12 +12,12 @@ Player::Player(Vector2 position) {
   this->position = position;
   this->velocity = {0, 0}; // Initialize velocity
   this->angle = 0;
-  this->speed = 200.0f;        // Max speed (units per second)
-  this->acceleration = 800.0f; // Acceleration (units per second squared)
+  this->speed = 250.0f;        // Max speed (units per second)
+  this->acceleration = 710.0f; // Acceleration (units per second squared)
   this->deceleration =
-      500.0f; // Deceleration/friction (units per second squared)
+      275.0f; // Deceleration/friction (units per second squared)
   this->health = 100;
-  this->max_health = 100;
+  this->max_health = this->health;
 }
 
 void Player::load_texture(Texture2D texture) { this->texture = texture; }

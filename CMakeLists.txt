@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10) # Set the minimum required version of CMake
 
 # Project name and language
-project(autohacka LANGUAGES CXX)
+project(rapid_shooter VERSION 0.1.0 LANGUAGES C CXX)
 
 # Define directories
 set(SRC_DIR src)

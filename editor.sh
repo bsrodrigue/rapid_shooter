@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Compile and run
-cd build && cmake .. && make && cd - && ./build/bin/autohacka editor ./impel_down.json
+cd build && cmake .. && make && cd - && ./build/bin/rapid_shooter editor ./impel_down.json

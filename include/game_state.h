@@ -40,6 +40,6 @@ public:
     camera.target = player.position;
     camera.offset = {(float)WIN_WIDTH / 2, (float)WIN_HEIGHT / 2};
     camera.rotation = 0;
-    camera.zoom = 3;
+    camera.zoom = 2.0f;
   }
 };

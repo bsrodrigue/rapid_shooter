@@ -11129,7 +11129,7 @@
 		}, {
 			"type":	0,
 			"enemy_health":	10,
-			"shooting_interval":	0.00499999988824129,
+			"shooting_interval":	0.10000000149011612,
 			"shooting_duration":	5,
 			"shooting_cooldown":	2,
 			"tracks_player":	true,
@@ -11140,7 +11140,7 @@
 		}, {
 			"type":	0,
 			"enemy_health":	10,
-			"shooting_interval":	0.00499999988824129,
+			"shooting_interval":	0.10000000149011612,
 			"shooting_duration":	5,
 			"shooting_cooldown":	2,
 			"tracks_player":	true,
@@ -11151,7 +11151,7 @@
 		}, {
 			"type":	0,
 			"enemy_health":	10,
-			"shooting_interval":	0.00499999988824129,
+			"shooting_interval":	0.10000000149011612,
 			"shooting_duration":	5,
 			"shooting_cooldown":	2,
 			"tracks_player":	true,

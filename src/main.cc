@@ -31,8 +31,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
-#include <iomanip>
-#include <ios>
 #include <iostream>
 #include <raylib.h>
 #include <raymath.h>
@@ -47,10 +45,10 @@ std::string level_file;
 std::string game_mode;
 
 // TODO: Maybe create a config file for player stats
-float player_bullet_damage = 0.1;
-float projectile_speed = 5;
+float player_bullet_damage = 0.5;
+float projectile_speed = 8.5;
 float last_shot = 0;
-float shooting_interval = 0.1;
+float shooting_interval = 0.2;
 
 const float DEFAULT_PROXIMITY_RADIUS = 20.0f;
 const float DEFAULT_ENTITY_RADIUS = 12.5f;
@@ -517,9 +515,13 @@ void handle_enemy_behaviour() {
   }
 }
 
-void update_positions() {
+void update_camera() {
   game_state.camera.target =
       Vector2Lerp(game_state.camera.target, game_state.player.position, 0.05);
+}
+
+void update_positions() {
+  update_camera();
   handle_enemy_behaviour();
 
   update_enemy_projectiles();
