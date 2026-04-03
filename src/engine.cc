@@ -35,6 +35,7 @@
 #include "game_config.h"
 #include "hud.h"
 #include "input_handler.h"
+#include "engine.h"
 
 ScreenManager screen_manager;
 
@@ -698,14 +699,7 @@ void set_initial_screen(const char *game_mode) {
 
 bool show_message = false;
 
-int main(int argc, char *argv[]) {
-
-  if (argc != 3) {
-    printf("usage: autohacka [mode] [level_file]\n");
-    printf("possible modes: game, editor\n");
-    return 1;
-  }
-
+void run_engine(const char* mode, const char* initial_level) {
   unsigned int seed = time(0);
 
   SetRandomSeed(seed);
@@ -718,8 +712,8 @@ int main(int argc, char *argv[]) {
   // Initialize ImGUI
   rlImGuiSetup(true);
 
-  game_mode = argv[1];
-  level_file = argv[2];
+  game_mode = (char*)mode;
+  level_file = (char*)initial_level;
 
   set_initial_screen(game_mode);
 
@@ -769,5 +763,4 @@ int main(int argc, char *argv[]) {
   rlImGuiShutdown();
 
   CloseWindow();
-  return 0;
 }
