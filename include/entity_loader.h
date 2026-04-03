@@ -7,27 +7,34 @@
 #include <raylib.h>
 #include <vector>
 
+#pragma once
+
+#include "editor_entities.h"
+#include "gate.h"
+#include "item.h"
+#include "warpzone.h"
+#include <raylib.h>
+#include <vector>
+#include "enemy.h"
+
 class EntityLoader : public EntityVisitor {
 public:
   Vector2 position;
 
-  // Game State
   EntityLoader(Vector2 position, std::vector<Wall> &walls,
                std::vector<Vector2> &wall_positions, std::vector<Gate> &gates,
-               std::vector<Vector2> &gate_positions, Enemy *enemies,
-               int &enemy_count, Warpzone *warpzones, int &warpzone_count,
-               BaseItem *items, int &item_count)
+               std::vector<Vector2> &gate_positions, std::vector<Enemy> &enemies,
+               std::vector<Warpzone> &warpzones,
+               std::vector<BaseItem> &items)
       : position(position), walls(walls), wall_positions(wall_positions),
         gates(gates), gate_positions(gate_positions), enemies(enemies),
-        warpzones(warpzones), warpzone_count(warpzone_count), items(items),
-        item_count(item_count), enemy_count(enemy_count) {}
+        warpzones(warpzones), items(items) {}
 
   void visit(const EditorPlayer &player) override {
-    // Handle player loading logic
+    // Handle player loading logic (e.g., set spawn point)
   }
 
   void visit(const EditorVoid &voidCell) override {
-    // Handle void cell loading logic
   }
 
   void visit(const EditorWall &wall) override {
@@ -39,18 +46,18 @@ public:
 
   void visit(const EditorEnemy &enemy) override {
     Enemy e = create_enemy_from_level_data(position, enemy);
-    enemies[enemy_count++] = e;
+    enemies.push_back(e);
   }
 
   void visit(const EditorWarpzone &warpzone) override {
-    warpzones[warpzone_count++] = {position, warpzone.destination};
+    warpzones.push_back({position, warpzone.destination});
   }
 
   void visit(const EditorItem &item) override {
     ItemTexture texture =
         (item.effect == HEALING_EFFECT) ? HEALING_CHIP_TEXTURE : KEY_TEXTURE;
     BaseItem i = create_base_item(item.effect, item.usage, texture, position);
-    items[item_count++] = i;
+    items.push_back(i);
   }
 
   void visit(const EditorGate &gate) override {
@@ -67,10 +74,7 @@ private:
   std::vector<Vector2> &wall_positions;
   std::vector<Gate> &gates;
   std::vector<Vector2> &gate_positions;
-  Enemy *enemies;
-  Warpzone *warpzones;
-  int &warpzone_count;
-  BaseItem *items;
-  int &item_count;
-  int &enemy_count;
+  std::vector<Enemy> &enemies;
+  std::vector<Warpzone> &warpzones;
+  std::vector<BaseItem> &items;
 };

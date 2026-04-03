@@ -1,9 +1,7 @@
+#pragma once
+
 #include <raylib.h>
-
-#ifndef PROJECTILES_H
-#define PROJECTILES_H
-
-#define MAX_PROJECTILES 50000
+#include <vector>
 
 class Projectile {
 public:
@@ -18,9 +16,10 @@ public:
 
 class ProjectilePool {
 public:
-  Projectile pool[MAX_PROJECTILES];
+  std::vector<Projectile> pool;
+  std::vector<int> free_indices;
 
-  ProjectilePool();
+  ProjectilePool(int initial_size = 1000);
 
   int get_free_projectile();
 
@@ -28,5 +27,3 @@ public:
 
   void deallocate_projectile(int index);
 };
-
-#endif

@@ -10,8 +10,8 @@ set(BUILD_DIR build)
 set(EXTERNAL_DIR external)
 
 # Find all source files in src/
-file(GLOB_RECURSE ALL_SRC ${SRC_DIR}/*.cc)
-file(GLOB_RECURSE HEADER_FILES ${INCLUDE_DIR}/*.h)
+file(GLOB ALL_SRC ${SRC_DIR}/*.cc)
+file(GLOB HEADER_FILES ${INCLUDE_DIR}/*.h)
 
 # Define common source files (everything except the entry points)
 set(COMMON_SRC ${ALL_SRC})
@@ -66,5 +66,11 @@ endfunction()
 # Specify the executable targets
 setup_target(rapid_shooter ${SRC_DIR}/game_main.cc)
 setup_target(rapid_editor ${SRC_DIR}/editor_main.cc)
+
+# Test Runner
+add_executable(test_runner tests/test_main.cc ${COMMON_SRC} ${IMGUI_SRC} ${RLIMGUI_SRC})
+target_include_directories(test_runner PRIVATE ${COMMON_INCLUDES} tests)
+target_link_libraries(test_runner PRIVATE ${RAYLIB_LIBRARY} m GL pthread dl X11)
+set_target_properties(test_runner PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
