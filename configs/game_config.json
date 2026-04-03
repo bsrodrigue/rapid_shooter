@@ -1,0 +1,23 @@
+{
+  "player": {
+    "bullet_damage": 0.9,
+    "shooting_interval": 0.5,
+    "max_health": 10000.0,
+    "speed": 2.0
+  },
+  "projectiles": {
+    "speed": 10.0
+  },
+  "enemies": {
+    "max_enemies": 100,
+    "collision_radius": 10.0,
+    "vision_radius": 200.0,
+    "shooting_interval": 0.5
+  },
+  "window": {
+    "width": 1200,
+    "height": 600,
+    "fps": 60,
+    "title": "Rapid Shooter"
+  }
+}

@@ -32,6 +32,9 @@
 #include <string.h>
 #include <variant>
 #include <vector>
+#include "game_config.h"
+#include "hud.h"
+#include "input_handler.h"
 
 ScreenManager screen_manager;
 
@@ -40,11 +43,8 @@ Level level;
 char *level_file;
 char *game_mode;
 
-// TODO: Maybe create a config file for player stats
-float player_bullet_damage = 0.1;
-float projectile_speed = 10;
+// Config initialization moved to main()
 float last_shot = 0;
-float shooting_interval = 0.05;
 
 // Experimentative Gameplay
 int kill_count = 0;
@@ -167,7 +167,7 @@ void handle_game_input(int pressed_key) {
   // Handle player shooting
   float now = GetTime();
   if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
-      (now - last_shot) > shooting_interval) {
+      (now - last_shot) > current_config.player.shooting_interval) {
     player_shoot();
     last_shot = now;
   }
@@ -239,7 +239,7 @@ void use_item(Player *player, ItemEffect effect) {
     heal(player, 10);
     break;
   case PROJECTILE_BOOST_EFFECT:
-    player_bullet_damage += 5;
+    current_config.player.bullet_damage += 5;
     break;
   case SPECIAL_EFFECT:
     break;
@@ -287,26 +287,26 @@ void handle_enemy_death(Enemy *enemy) {
 }
 
 void damage_enemy(int index) {
-  if ((enemies[index].health - player_bullet_damage) <= 0) {
+  if ((enemies[index].health - current_config.player.bullet_damage) <= 0) {
     enemies[index].state = DEAD;
     handle_enemy_death(&enemies[index]);
 
     // Experimentative Gameplay
     kill_count++;
-    player_bullet_damage += 0.01;
+    current_config.player.bullet_damage += 0.01;
   }
 
-  enemies[index].health = enemies[index].health - player_bullet_damage;
+  enemies[index].health = enemies[index].health - current_config.player.bullet_damage;
 }
 
 void damage_wall(int index) {
-  if ((walls[index].health - player_bullet_damage) <= 0) {
+  if ((walls[index].health - current_config.player.bullet_damage) <= 0) {
     // walls[index].state = DESTROYED;
     walls.erase(walls.begin() + index);
     wall_positions.erase(wall_positions.begin() + index);
   }
 
-  walls.at(index).health = walls.at(index).health - player_bullet_damage;
+  walls.at(index).health = walls.at(index).health - current_config.player.bullet_damage;
 }
 
 void damage_player(float damage) {
@@ -376,7 +376,7 @@ void update_enemy_projectiles() {
     Vector2 projectile_pos =
         Vector2Add(enemy_projectiles.pool[i].position,
                    Vector2Multiply(enemy_projectiles.pool[i].direction,
-                                   {projectile_speed, projectile_speed}));
+                                   {current_config.projectiles.speed, current_config.projectiles.speed}));
     enemy_projectiles.pool[i].position = projectile_pos;
   }
 }
@@ -415,7 +415,7 @@ void update_player_projectiles() {
     Vector2 projectile_pos =
         Vector2Add(player_projectiles.pool[i].position,
                    Vector2Multiply(player_projectiles.pool[i].direction,
-                                   {projectile_speed, projectile_speed}));
+                                   {current_config.projectiles.speed, current_config.projectiles.speed}));
     player_projectiles.pool[i].position = projectile_pos;
   }
 }
@@ -442,7 +442,7 @@ void handle_enemy_shoot(Enemy *enemy) {
     }
   }
 
-  if ((time - enemy->last_shot_time) >= enemy->shooting_interval) {
+  if ((time - enemy->last_shot_time) >= current_config.enemies.shooting_interval) {
     enemy->last_shot_time = time;
 
     switch (enemy->type) {
@@ -571,27 +571,7 @@ void draw_projectiles(ProjectilePool projectile_pool) {
   }
 }
 
-void draw_healthbar(Vector2 position, float max_health, float health, int width,
-                    int height) {
-  float health_percentage = health / max_health;
-  int max_width = 32, min_width = 1;
-
-  int rectWidth =
-      min_width + (int)((max_width - min_width) * health_percentage);
-
-  Color color = GREEN;
-
-  if (health_percentage < 0.3) {
-    color = RED;
-  }
-
-  else if (health_percentage < 0.6) {
-    color = ORANGE;
-  }
-
-  DrawRectangle((position.x - (int)(width / 2)), (position.y - 25), rectWidth,
-                5, color);
-}
+// Moving UI functions to hud.cc
 
 // TODO: Use this and think about creating maybe a universal utility for
 // drawing entities
@@ -603,9 +583,7 @@ void draw_enemies() {
     switch (enemies[i].type) {
     case BASE_ENEMY: {
       Vector2 position = enemies[i].position;
-      draw_healthbar(position, enemies[i].max_health, enemies[i].health, 32,
-                     32);
-
+      draw_enemy_healthbar(position, enemies[i].health, enemies[i].max_health);
       draw_base_enemy(enemies[i].position, enemies[i].shooting_angle);
     } break;
     }
@@ -627,24 +605,7 @@ void draw_player_target() {
   draw_target_cursor(mouse, 0);
 }
 
-void draw_player_healthbar(Player player) {
-  // Calculate the width of the rectangle based on health
-  float healthPercentage = (float)player.health / player.max_health;
-  int rectWidth = 1 + (int)((32 - 1) * healthPercentage);
-
-  Color color = GREEN;
-
-  if (healthPercentage < 0.3) {
-    color = RED;
-  }
-
-  else if (healthPercentage < 0.6) {
-    color = ORANGE;
-  }
-
-  DrawRectangle((player.position.x - 16), (player.position.y - 25), rectWidth,
-                5, color);
-}
+// Healthbar logic moved to hud.cc
 
 void draw_warpzones() {
   for (int i = 0; i < warpzone_count; i++) {
@@ -675,6 +636,7 @@ void render_game() {
   // HUD
   draw_player_target();
   draw_player_healthbar(player);
+  draw_game_hud(player, kill_count);
 }
 
 // TODO: Optimize level loading
@@ -750,6 +712,7 @@ int main(int argc, char *argv[]) {
 
   init_window();
   load_textures();
+  current_config = GameConfig::load_from_json("configs/game_config.json");
   // load_shaders();
 
   // Initialize ImGUI

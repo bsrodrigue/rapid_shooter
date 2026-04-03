@@ -13,6 +13,10 @@ set(EXTERNAL_DIR external)
 file(GLOB_RECURSE SRC_FILES ${SRC_DIR}/*.cc)
 file(GLOB_RECURSE HEADER_FILES ${INCLUDE_DIR}/*.h)
 
+# Ensure new files are picked up
+set(SRC_FILES ${SRC_FILES} ${SRC_DIR}/game_config.cc ${SRC_DIR}/hud.cc ${SRC_DIR}/input_handler.cc)
+set(HEADER_FILES ${HEADER_FILES} ${INCLUDE_DIR}/game_config.h ${INCLUDE_DIR}/hud.h ${INCLUDE_DIR}/input_handler.h)
+
 # Add ImGui and rlImGui source files
 set(IMGUI_DIR ${EXTERNAL_DIR}/imgui)
 set(RLIMGUI_DIR ${EXTERNAL_DIR}/rlImGui)
