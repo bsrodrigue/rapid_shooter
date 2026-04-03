@@ -1,3 +1,0 @@
-/home/dnlbs/workspace/personal/mier_autohacr/build/CMakeFiles/autohacka.dir
-/home/dnlbs/workspace/personal/mier_autohacr/build/CMakeFiles/edit_cache.dir
-/home/dnlbs/workspace/personal/mier_autohacr/build/CMakeFiles/rebuild_cache.dir
